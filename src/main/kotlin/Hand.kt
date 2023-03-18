@@ -1,11 +1,17 @@
 class Hand {
     private var cards = mutableListOf<Card>()
+    private val name: String
 
-    fun addCard(card: Card) {
-        cards.add(0, card)
+    constructor(name: String = "") {
+        this.name = name
     }
 
-    fun showHand() {
-        println("Hand is: $cards")
+    fun addCard(card: Card) = cards.add(0, card)
+    fun sortHand() {
+        cards.sort()
     }
+
+    fun showHand() = println("Hand $name is: $cards")
+
+    fun playCard(index: Int) = cards.removeAt(index)
 }

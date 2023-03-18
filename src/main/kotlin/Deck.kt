@@ -24,4 +24,6 @@ class Deck {
         println("Deck is: ${this.cards}");
         println("Deck size is: ${this.cards.size}");
     }
+
+    fun hasCards() = cards.size > 0
 }

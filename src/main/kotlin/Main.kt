@@ -1,12 +1,18 @@
 fun main(args: Array<String>) {
     val deck = Deck()
-    deck.showDeck()
 
-    val hand = Hand()
-    hand.addCard(deck.drawCard())
-    hand.addCard(deck.drawCard())
-    hand.addCard(deck.drawCard())
+    val numberOfHands = 4
+    val hands = arrayListOf<Hand>()
+    for(i in 1..numberOfHands) hands.add(Hand("$i"))
 
-    hand.showHand()
-    deck.showDeck()
+    var idx = 0
+    while (deck.hasCards()) {
+        hands.get(idx).addCard(deck.drawCard())
+        idx = (idx + 1) % numberOfHands
+    }
+
+    hands.forEach { hand ->
+        hand.sortHand()
+        hand.showHand()
+    }
 }
