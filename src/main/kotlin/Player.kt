@@ -1,6 +1,6 @@
 class Player {
     private val name: String
-    public var hand: Hand = Hand()
+    var hand: Hand = Hand()
     private val isIA: Boolean
 
     constructor(name: String, isIA: Boolean = false) {
@@ -11,27 +11,28 @@ class Player {
     }
 
     fun takeTurn(game: Game) {
-        Logger.log("$name takes turn...")
         if (isIA) {
-            if(hand.getHand().size == 0) {
-                game.playerLost(game.findPlayerIndex(this))
-                return
-            }
+            if(hand.getHand().size == 0) return
+            Logger.log("$name takes turn...")
             game.playCard(playCard(0))
+            if(hand.getHand().size == 0) game.playerFinished(this)
         } else {
+            game.showCurrentCard()
             Logger.log("Do some human stuff")
         }
     }
 
-    fun showHand() = hand.getHand().let {
-        println("$name's hand contains ${it.size} cards, which are: $it")
+    fun formattedHand() = hand.getHand().let {
+        "$name's hand contains ${it.size} cards, which are: $it"
     }
 
     fun sortHand() = hand.sortHand()
 
     fun playCard(cardIdx: Int): Card {
         val card = hand.playCard(cardIdx)
-        Logger.log("$name plays $card")
+        Logger.log("$name plays $card\n")
         return card
     }
+
+    fun getName() = name
 }

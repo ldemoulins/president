@@ -13,9 +13,8 @@ fun main(args: Array<String>) {
         idx = (idx + 1) % numberOfHands
     }
 
-    players.forEach {
-        it.sortHand()
-        it.showHand()
-    }
+    val game = Game(players)
+    game.startGame()
 
+    game.showResults()
 }
