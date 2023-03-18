@@ -3,28 +3,19 @@ fun main(args: Array<String>) {
     val deck = Deck()
 
     val numberOfHands = 4
-    val hands = arrayListOf<Hand>()
-    for(i in 1..numberOfHands) hands.add(Hand("$i"))
+    val playerNames = arrayOf("Apava", "Ldemoul", "Geroges", "L'autre teube")
+    val players = arrayListOf<Player>()
+    for(i in 1..numberOfHands) players.add(Player(playerNames.get(i-1), true))
 
     var idx = 0
     while (deck.hasCards()) {
-        hands.get(idx).addCard(deck.drawCard())
+        players.get(idx).hand.addCard(deck.drawCard())
         idx = (idx + 1) % numberOfHands
     }
 
-    hands.forEach { hand ->
-        hand.sortHand()
-        hand.showHand()
-    }
-
-    val game = Game(hands)
-
-    game.showCurrentCard()
-    game.playCard(hands.get(0).playCard(0))
-    game.showCurrentCard()
-
-    hands.forEach { hand ->
-        hand.showHand()
+    players.forEach {
+        it.sortHand()
+        it.showHand()
     }
 
 }

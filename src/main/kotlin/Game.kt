@@ -1,9 +1,10 @@
 class Game {
-    private val players: MutableList<Hand>
+    private val players: MutableList<Player>
     private var ladderBoard: ArrayList<Int>
     private var currentCard: Card? = null
+    private var currentPlayerIdx = 0
 
-    constructor(players: MutableList<Hand>) {
+    constructor(players: MutableList<Player>) {
         this.players = players
         this.ladderBoard = ArrayList(0)
     }
@@ -27,7 +28,7 @@ class Game {
     }
 
     fun showCurrentCard() {
-        if(currentCard != null) {
+        if (currentCard != null) {
             println("Current card is $currentCard")
         } else {
             println("No card has been played yet")
@@ -35,7 +36,28 @@ class Game {
     }
 
     fun playCard(card: Card) {
-        Logger.log("Playing card $card")
         currentCard = card
+    }
+
+    fun startGame() {
+        while (!isGameEnded()) {
+            players[currentPlayerIdx].let { player ->
+                player.takeTurn(this)
+            }
+        }
+    }
+
+    fun nextPlayer(): Player {
+        currentPlayerIdx = (currentPlayerIdx + 1) % players.size
+        return players[currentPlayerIdx]
+    }
+
+    fun findPlayerIndex(player: Player): Int {
+        for(i in 0 until players.size) {
+            if(player == players[i]) {
+                return i
+            }
+        }
+        throw Error("Player not found")
     }
 }
