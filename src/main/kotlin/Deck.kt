@@ -19,4 +19,9 @@ class Deck {
     fun drawCard(): Card {
         return this.cards.removeAt(0);
     }
+
+    fun showDeck() {
+        println("Deck is: ${this.cards}");
+        println("Deck size is: ${this.cards.size}");
+    }
 }

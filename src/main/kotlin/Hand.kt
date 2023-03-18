@@ -6,6 +6,6 @@ class Hand {
     }
 
     fun showHand() {
-        println(cards)
+        println("Hand is: $cards")
     }
 }
