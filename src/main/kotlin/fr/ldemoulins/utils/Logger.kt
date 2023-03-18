@@ -1,3 +1,5 @@
+package fr.ldemoulins.utils
+
 object Logger {
     private var debug = false
     fun activateDebugLogger() {

@@ -1,3 +1,7 @@
+package fr.ldemoulins.game.player
+
+import fr.ldemoulins.game.cards.Card
+
 class Hand {
     private val cards = mutableListOf<Card>()
 

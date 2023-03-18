@@ -1,3 +1,5 @@
+package fr.ldemoulins.game.cards
+
 import kotlin.random.Random
 
 class Deck {
@@ -21,8 +23,8 @@ class Deck {
     }
 
     fun showDeck() {
-        println("Deck is: ${this.cards}");
-        println("Deck size is: ${this.cards.size}");
+        println("fr.ldemoulins.Game.Cards.Deck is: ${this.cards}");
+        println("fr.ldemoulins.Game.Cards.Deck size is: ${this.cards.size}");
     }
 
     fun hasCards() = cards.size > 0

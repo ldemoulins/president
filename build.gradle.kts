@@ -29,7 +29,7 @@ application {
 tasks.withType(Jar::class) {
     manifest {
         attributes["Manifest-Version"] = "1.0"
-        attributes["Main-Class"] = "MainKt"
+        attributes["Main-Class"] = "fr.ldemoulins.MainKt"
     }
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

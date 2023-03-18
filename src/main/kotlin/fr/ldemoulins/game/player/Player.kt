@@ -1,3 +1,10 @@
+package fr.ldemoulins.game.player
+
+import fr.ldemoulins.game.cards.Card
+import fr.ldemoulins.game.cards.canBePlayedOn
+import fr.ldemoulins.game.Game
+import fr.ldemoulins.utils.Logger
+
 class Player {
     private val name: String
     var hand: Hand = Hand()

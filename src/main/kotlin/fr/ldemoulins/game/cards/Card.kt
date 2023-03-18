@@ -1,3 +1,5 @@
+package fr.ldemoulins.game.cards
+
 enum class Card {
     THREE,
     FOUR,
