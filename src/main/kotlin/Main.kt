@@ -1,4 +1,5 @@
 fun main(args: Array<String>) {
+    Logger.activateDebugLogger()
     val deck = Deck()
 
     val numberOfHands = 4
@@ -15,4 +16,15 @@ fun main(args: Array<String>) {
         hand.sortHand()
         hand.showHand()
     }
+
+    val game = Game(hands)
+
+    game.showCurrentCard()
+    game.playCard(hands.get(0).playCard(0))
+    game.showCurrentCard()
+
+    hands.forEach { hand ->
+        hand.showHand()
+    }
+
 }

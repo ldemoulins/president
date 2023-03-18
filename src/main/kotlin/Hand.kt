@@ -1,8 +1,9 @@
 class Hand {
-    private var cards = mutableListOf<Card>()
+    private val cards = mutableListOf<Card>()
     private val name: String
 
     constructor(name: String = "") {
+        Logger.log("adding player $name")
         this.name = name
     }
 
@@ -11,7 +12,7 @@ class Hand {
         cards.sort()
     }
 
-    fun showHand() = println("Hand $name is: $cards")
+    fun showHand() = println("Hand $name contains ${cards.size} that are: $cards")
 
     fun playCard(index: Int) = cards.removeAt(index)
 }

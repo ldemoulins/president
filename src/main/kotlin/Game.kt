@@ -1,6 +1,7 @@
 class Game {
     private val players: MutableList<Hand>
-    private var ladderBoard: ArrayList<Int>;
+    private var ladderBoard: ArrayList<Int>
+    private var currentCard: Card? = null
 
     constructor(players: MutableList<Hand>) {
         this.players = players
@@ -8,20 +9,33 @@ class Game {
     }
 
     fun playerLost(playerIdx: Int) {
-        this.ladderBoard.add(playerIdx)
+        ladderBoard.add(playerIdx)
     }
 
-    fun isGameEnded() = this.ladderBoard.size == this.players.size - 1
+    fun isGameEnded() = ladderBoard.size >= players.size - 1
 
     fun showResults() {
-        if(!isGameEnded()) {
+        if (!isGameEnded()) {
             println("The game is not finished yet.")
             println("Players out of game already: $ladderBoard")
         } else {
             println("Ladder board:")
-            for(i in 0..ladderBoard.size) {
-
+            ladderBoard.reversed().forEach {
+                println(it)
             }
         }
+    }
+
+    fun showCurrentCard() {
+        if(currentCard != null) {
+            println("Current card is $currentCard")
+        } else {
+            println("No card has been played yet")
+        }
+    }
+
+    fun playCard(card: Card) {
+        Logger.log("Playing card $card")
+        currentCard = card
     }
 }
