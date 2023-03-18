@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
 
     var idx = 0
     while (deck.hasCards()) {
-        players.get(idx).hand.addCard(deck.drawCard())
+        players[idx].hand.addCard(deck.drawCard())
         idx = (idx + 1) % numberOfHands
     }
 

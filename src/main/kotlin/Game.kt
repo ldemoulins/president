@@ -7,16 +7,19 @@ class Game {
     private var currentPlayerIdx = 0
     private var playerHavePassed: ArrayList<Player> = ArrayList()
     private var lastPlayerThatTookTurnIdx = 0
+    private var hasTwoBeenPlayed = false
 
     constructor(players: MutableList<Player>) {
         this.players = players
-        this.players.forEach {it.sortHand()}
+        this.players.forEach { it.sortHand() }
         this.ladderBoard = ArrayList(0)
     }
 
     fun playerFinished(player: Player) {
-        if(ladderBoard.find { it == player } == null)
+        if (ladderBoard.find { it == player } == null) {
             ladderBoard.add(player)
+            Logger.log("${player.getName()} has finished!")
+        }
     }
 
     private fun isGameEnded() = ladderBoard.size >= players.size
@@ -28,7 +31,7 @@ class Game {
         } else {
             println("Order:")
             ladderBoard.forEachIndexed { index, player ->
-                println("${index+1}: ${player.getName()}")
+                println("${index + 1}: ${player.getName()}")
             }
         }
     }
@@ -43,35 +46,42 @@ class Game {
 
     fun getCurrentCard() = currentCard
 
-    fun playCard(card: Card): Boolean {
-
-        return if(currentCard == null || card canBePlayedOn currentCard!!) {
-            currentCard = card
-            true
-        } else {
-            false
+    fun playCard(card: Card) {
+        currentCard = card
+        if (card == Card.TWO) {
+            hasTwoBeenPlayed = true
         }
     }
 
     fun startGame() {
-        players.forEach { player ->
-            Logger.log(player.formattedHand())
-        }
         while (!isGameEnded()) {
-            if(!haveAllPlayersPassed()) {
+            players.forEach { player ->
+                Logger.log(player.formattedHand())
+            }
+            println("")
+            if (!haveAllPlayersPassed()) {
                 players[currentPlayerIdx].let { player ->
-                    if(!hasPlayerPassed(player)) {
+                    if (!hasPlayerPassed(player)) {
                         player.takeTurn(this)
                         lastPlayerThatTookTurnIdx = currentPlayerIdx
                     }
                 }
-                nextPlayer()
+                if (hasTwoBeenPlayed) {
+                    newRound()
+                } else {
+                    nextPlayer()
+                }
             } else {
-                playerHavePassed = ArrayList()
-                currentCard = null
-                currentPlayerIdx = lastPlayerThatTookTurnIdx
+                newRound()
             }
         }
+    }
+
+    private fun newRound() {
+        playerHavePassed = ArrayList()
+        currentCard = null
+        currentPlayerIdx = lastPlayerThatTookTurnIdx
+        hasTwoBeenPlayed = false
     }
 
     private fun nextPlayer(): Player {
@@ -80,7 +90,7 @@ class Game {
     }
 
     fun playerPass(player: Player) {
-        if(!hasPlayerPassed(player)) {
+        if (!hasPlayerPassed(player)) {
             playerHavePassed.add(player)
         }
     }

@@ -13,7 +13,6 @@ class Player {
     fun takeTurn(game: Game) {
         if (isIA) {
             if (hand.getHand().size == 0) return
-            Logger.log("$name takes turn...")
             playLowestCardOrPass(game)
             if (hand.getHand().size == 0) game.playerFinished(this)
         } else {
@@ -28,31 +27,24 @@ class Player {
 
     fun sortHand() = hand.sortHand()
 
-    fun playCard(cardIdx: Int): Card {
-        val card = hand.playCard(cardIdx)
-        Logger.log("$name plays $card\n")
-        return card
-    }
-
-    private fun checkCard(cardIdx: Int) = hand.getHand()[cardIdx]
+    private fun playCard(card: Card) = hand.playCard(card)
 
     fun getName() = name
 
     private fun playLowestCardOrPass(game: Game) {
         game.getCurrentCard().let { card: Card? ->
-            if (card == null) {
-                game.playCard(playCard(0))
-            } else {
-                var i = 0
-                while (i < hand.getHand().size && !(checkCard(i) canBePlayedOn card!!)) {
-                    i++
-                }
-                if (i < hand.getHand().size) {
-                    game.playCard(playCard(i))
-                } else {
-                    game.playerPass(this)
-                }
-            }
+           getFirstPlayableCard(card).let {
+               if(it == null) {
+                   Logger.log("$name cannot play, passes their turn")
+                   game.playerPass(this)
+               } else {
+                   Logger.log("$name plays $it")
+                   playCard(it)
+                   game.playCard(it)
+               }
+           }
         }
     }
+
+    private fun getFirstPlayableCard(cardToPlayOn: Card?) = hand.getHand().find { it canBePlayedOn cardToPlayOn }
 }

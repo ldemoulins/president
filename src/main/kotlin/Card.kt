@@ -1,5 +1,4 @@
 enum class Card {
-    TWO,
     THREE,
     FOUR,
     FIVE,
@@ -11,9 +10,11 @@ enum class Card {
     JOCKEY,
     QUEEN,
     KING,
-    ACE
+    ACE,
+    TWO
 }
 
-infix fun Card.canBePlayedOn(card: Card): Boolean {
+infix fun Card.canBePlayedOn(card: Card?): Boolean {
+    if(card == null) return true
     return this.ordinal >= card.ordinal
 }

@@ -8,5 +8,5 @@ class Hand {
 
     fun getHand() = cards
 
-    fun playCard(index: Int) = cards.removeAt(index)
+    fun playCard(card: Card) = cards.remove(card)
 }
