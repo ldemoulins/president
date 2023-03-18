@@ -13,3 +13,7 @@ enum class Card {
     KING,
     ACE
 }
+
+infix fun Card.canBePlayedOn(card: Card): Boolean {
+    return this.ordinal >= card.ordinal
+}

@@ -1,8 +1,12 @@
+import java.util.Objects
+
 class Game {
     private val players: MutableList<Player>
     private var ladderBoard: ArrayList<Player>
     private var currentCard: Card? = null
     private var currentPlayerIdx = 0
+    private var playerHavePassed: ArrayList<Player> = ArrayList()
+    private var lastPlayerThatTookTurnIdx = 0
 
     constructor(players: MutableList<Player>) {
         this.players = players
@@ -37,8 +41,16 @@ class Game {
         }
     }
 
-    fun playCard(card: Card) {
-        currentCard = card
+    fun getCurrentCard() = currentCard
+
+    fun playCard(card: Card): Boolean {
+
+        return if(currentCard == null || card canBePlayedOn currentCard!!) {
+            currentCard = card
+            true
+        } else {
+            false
+        }
     }
 
     fun startGame() {
@@ -46,10 +58,19 @@ class Game {
             Logger.log(player.formattedHand())
         }
         while (!isGameEnded()) {
-            players[currentPlayerIdx].let { player ->
-                player.takeTurn(this)
+            if(!haveAllPlayersPassed()) {
+                players[currentPlayerIdx].let { player ->
+                    if(!hasPlayerPassed(player)) {
+                        player.takeTurn(this)
+                        lastPlayerThatTookTurnIdx = currentPlayerIdx
+                    }
+                }
+                nextPlayer()
+            } else {
+                playerHavePassed = ArrayList()
+                currentCard = null
+                currentPlayerIdx = lastPlayerThatTookTurnIdx
             }
-            nextPlayer()
         }
     }
 
@@ -57,4 +78,15 @@ class Game {
         currentPlayerIdx = (currentPlayerIdx + 1) % players.size
         return players[currentPlayerIdx]
     }
+
+    fun playerPass(player: Player) {
+        if(!hasPlayerPassed(player)) {
+            playerHavePassed.add(player)
+        }
+    }
+
+    private fun haveAllPlayersPassed() = (playerHavePassed.size + ladderBoard.size) == players.size
+
+    private fun hasPlayerPassed(player: Player) = playerHavePassed.find { player == it } != null
+
 }
