@@ -1,5 +1,6 @@
-package fr.ldemoulins.game
+package fr.ldemoulins.game.states
 
+import fr.ldemoulins.game.Game
 import fr.ldemoulins.game.cards.Card
 import fr.ldemoulins.utils.Logger
 

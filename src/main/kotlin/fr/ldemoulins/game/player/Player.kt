@@ -7,7 +7,7 @@ import fr.ldemoulins.utils.Logger
 
 class Player {
     private val name: String
-    var hand: Hand = Hand()
+    private var hand: Hand = Hand()
     private val isIA: Boolean
 
     constructor(name: String, isIA: Boolean = false) {
@@ -37,6 +37,7 @@ class Player {
     private fun playCard(card: Card) = hand.playCard(card)
 
     fun getName() = name
+    fun getHand() = hand
 
     private fun playLowestCardOrPass(game: Game) {
         game.getCurrentCard().let { card: Card? ->

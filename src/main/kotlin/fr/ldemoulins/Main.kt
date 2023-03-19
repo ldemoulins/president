@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 
     var idx = 0
     while (deck.hasCards()) {
-        players[idx].hand.addCard(deck.drawCard())
+        players[idx].getHand().addCard(deck.drawCard())
         idx = (idx + 1) % numberOfHands
     }
 
