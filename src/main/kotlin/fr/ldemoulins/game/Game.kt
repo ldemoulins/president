@@ -1,6 +1,7 @@
 package fr.ldemoulins.game
 
 import fr.ldemoulins.game.cards.Card
+import fr.ldemoulins.game.cards.canBePlayedOn
 import fr.ldemoulins.game.player.Player
 import fr.ldemoulins.utils.Logger
 import fr.ldemoulins.game.states.PlayersState
@@ -58,7 +59,7 @@ class Game(players: MutableList<Player>) {
             }
 
             playersState.getPlayer().let {
-                if (!hasPlayerPassed(it)) it.takeTurn(this)
+                if (!hasPlayerPassed(it) && !hasPlayerFinished(it)) it.takeTurn(this)
                 if (roundState.shouldRoundStop()) {
                     roundState.newRound()
                 } else {
@@ -82,7 +83,15 @@ class Game(players: MutableList<Player>) {
 
     private fun hasPlayerPassed(player: Player) = playerHavePassed.find { player == it } != null
 
+    private fun hasPlayerFinished(player: Player) = ladderBoard.find { player == it } != null
+
     fun resetPlayerPassed() {
         playerHavePassed = arrayListOf()
     }
+
+    fun seeLastCard() {
+        println("${roundState.getLastPlayedCard()}")
+    }
+
+    fun canPlayCard(card: Card) = card canBePlayedOn roundState.getLastPlayedCard()
 }
