@@ -23,8 +23,8 @@ fun main(args: Array<String>) {
     val numberOfHands = 4
     val playerNames = arrayOf("Apava", "Geroges", "L'autre teube", "ldemoul", "les magnolias")
     val players = arrayListOf<Player>()
-    for(i in 1 until numberOfHands+1) players.add(PlayerIA(playerNames[i - 1]))
-//    players.add(PlayerHuman(ArgParser.playerName))
+    for(i in 1 until numberOfHands) players.add(PlayerIA(playerNames[i - 1]))
+    players.add(PlayerHuman(ArgParser.playerName))
 
     var idx = 0
     while (deck.hasCards()) {
