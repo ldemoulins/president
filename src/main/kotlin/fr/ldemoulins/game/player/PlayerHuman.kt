@@ -16,15 +16,30 @@ class PlayerHuman(name: String): Player(name) {
 
     private fun getCommand(game: Game) {
         readln().let {
-            when(it) {
-                "h" -> displayHelp()
-                "q" -> quitGame()
-                "s" -> seeHand()
-                "see" -> seeHand()
-                "l" -> seeLastCard(game)
-                "last" -> seeLastCard(game)
-                "p" -> playACard(game)
-                "n" -> passTurn(game)
+            when(it.uppercase()) {
+                "H" -> displayHelp()
+                "Q" -> quitGame()
+                "S" -> seeHand()
+                "SEE" -> seeHand()
+                "L" -> seeLastCard(game)
+                "LAST" -> seeLastCard(game)
+                "P" -> playACard(game)
+                "N" -> passTurn(game)
+
+                "TWO" -> playSelectedCard("TWO", game)
+                "THREE" -> playSelectedCard("THREE", game)
+                "FOUR" -> playSelectedCard("FOUR", game)
+                "FIVE" -> playSelectedCard("FIVE", game)
+                "SIX" -> playSelectedCard("SIX", game)
+                "SEVEN" -> playSelectedCard("SEVEN", game)
+                "EIGHT" -> playSelectedCard("EIGHT", game)
+                "NINE" -> playSelectedCard("NINE", game)
+                "TEN" -> playSelectedCard("TEN", game)
+                "JOCKEY" -> playSelectedCard("JOCKEY", game)
+                "QUEEN" -> playSelectedCard("QUEEN", game)
+                "KING" -> playSelectedCard("KING", game)
+                "ACE" -> playSelectedCard("ACE", game)
+
                 else -> displayHelp()
             }
         }
@@ -54,23 +69,26 @@ class PlayerHuman(name: String): Player(name) {
     }
 
     private fun playACard(game: Game) {
-        readln().uppercase().let {cardName ->
-            hand.getHand().find { it.name == cardName }.let { card ->
-                if(card != null) {
-                    if(game.canPlayCard(card)) {
-                        println("Playing $card")
-                        playCard(card)
-                        game.playCard(card)
-                        if(hand.getHand().size == 0) {
-                            game.playerFinished(this)
-                        }
-                        turnDone = true
-                    }else {
-                        println("Cannot play card $card on top of ${game.getCurrentCard()}")
+        println("Enter one of your card to play:")
+        playSelectedCard(readln().uppercase(), game)
+    }
+
+    private fun playSelectedCard(cardName: String, game: Game) {
+        hand.getHand().find { it.name == cardName }.let { card ->
+            if(card != null) {
+                if(game.canPlayCard(card)) {
+                    println("Playing $card")
+                    playCard(card)
+                    game.playCard(card)
+                    if(hand.getHand().size == 0) {
+                        game.playerFinished(this)
                     }
-                } else {
-                    println("Could not find card $cardName")
+                    turnDone = true
+                }else {
+                    println("Cannot play card $card on top of ${game.getCurrentCard()}")
                 }
+            } else {
+                println("Could not find card $cardName")
             }
         }
     }
