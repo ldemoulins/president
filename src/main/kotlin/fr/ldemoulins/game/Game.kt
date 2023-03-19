@@ -2,13 +2,13 @@ package fr.ldemoulins.game
 
 import fr.ldemoulins.game.cards.Card
 import fr.ldemoulins.utils.Logger
-import fr.ldemoulins.game.player.Player
+import fr.ldemoulins.game.player.PlayerIA
 import fr.ldemoulins.game.states.PlayersState
 import fr.ldemoulins.game.states.RoundState
 
-class Game(players: MutableList<Player>) {
-    private var ladderBoard: ArrayList<Player>
-    private var playerHavePassed: ArrayList<Player> = ArrayList()
+class Game(players: MutableList<PlayerIA>) {
+    private var ladderBoard: ArrayList<PlayerIA>
+    private var playerHavePassed: ArrayList<PlayerIA> = ArrayList()
     private var roundState = RoundState(this)
     private val playersState: PlayersState
 
@@ -19,10 +19,10 @@ class Game(players: MutableList<Player>) {
         roundState.newRound()
     }
 
-    fun playerFinished(player: Player) {
+    fun playerFinished(player: PlayerIA) {
         if (ladderBoard.find { it == player } == null) {
             ladderBoard.add(player)
-            Logger.log("${player.getName()} has finished!")
+            Logger.log("${player.name} has finished!")
         }
     }
 
@@ -36,17 +36,7 @@ class Game(players: MutableList<Player>) {
             println("game finished in ${roundState.getRoundCount()} rounds")
             println("Order:")
             ladderBoard.forEachIndexed { index, player ->
-                println("${index + 1}: ${player.getName()}")
-            }
-        }
-    }
-
-    fun showCurrentCard() {
-        roundState.getLastPlayedCard().let { currentCard ->
-            if (currentCard != null) {
-                println("Current card is $currentCard")
-            } else {
-                println("No card has been played yet")
+                println("${index + 1}: ${player.name}")
             }
         }
     }
@@ -84,13 +74,13 @@ class Game(players: MutableList<Player>) {
         playersState.nextPlayer()
     }
 
-    fun playerPass(player: Player) {
+    fun playerPass(player: PlayerIA) {
         if (!hasPlayerPassed(player)) playerHavePassed.add(player)
     }
 
     private fun haveAllPlayersPassed() = (playerHavePassed.size + ladderBoard.size) == playersState.getNumberOfPlayers()
 
-    private fun hasPlayerPassed(player: Player) = playerHavePassed.find { player == it } != null
+    private fun hasPlayerPassed(player: PlayerIA) = playerHavePassed.find { player == it } != null
 
     fun resetPlayerPassed() {
         playerHavePassed = arrayListOf()
