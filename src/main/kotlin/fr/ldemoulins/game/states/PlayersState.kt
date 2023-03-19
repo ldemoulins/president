@@ -1,11 +1,11 @@
 package fr.ldemoulins.game.states
 
-import fr.ldemoulins.game.player.PlayerIA
+import fr.ldemoulins.game.player.Player
 import fr.ldemoulins.utils.Logger
 
-class PlayersState(private val playerList: MutableList<PlayerIA>) {
-    private var playerIt: Iterator<PlayerIA>
-    private var currentPlayer: PlayerIA
+class PlayersState(private val playerList: MutableList<Player>) {
+    private var playerIt: Iterator<Player>
+    private var currentPlayer: Player
 
     init {
         this.playerIt = this.playerList.iterator()

@@ -1,14 +1,14 @@
 package fr.ldemoulins.game
 
 import fr.ldemoulins.game.cards.Card
+import fr.ldemoulins.game.player.Player
 import fr.ldemoulins.utils.Logger
-import fr.ldemoulins.game.player.PlayerIA
 import fr.ldemoulins.game.states.PlayersState
 import fr.ldemoulins.game.states.RoundState
 
-class Game(players: MutableList<PlayerIA>) {
-    private var ladderBoard: ArrayList<PlayerIA>
-    private var playerHavePassed: ArrayList<PlayerIA> = ArrayList()
+class Game(players: MutableList<Player>) {
+    private var ladderBoard: ArrayList<Player>
+    private var playerHavePassed: ArrayList<Player> = ArrayList()
     private var roundState = RoundState(this)
     private val playersState: PlayersState
 
@@ -19,7 +19,7 @@ class Game(players: MutableList<PlayerIA>) {
         roundState.newRound()
     }
 
-    fun playerFinished(player: PlayerIA) {
+    fun playerFinished(player: Player) {
         if (ladderBoard.find { it == player } == null) {
             ladderBoard.add(player)
             Logger.log("${player.name} has finished!")
@@ -74,13 +74,13 @@ class Game(players: MutableList<PlayerIA>) {
         playersState.nextPlayer()
     }
 
-    fun playerPass(player: PlayerIA) {
+    fun playerPass(player: Player) {
         if (!hasPlayerPassed(player)) playerHavePassed.add(player)
     }
 
     private fun haveAllPlayersPassed() = (playerHavePassed.size + ladderBoard.size) == playersState.getNumberOfPlayers()
 
-    private fun hasPlayerPassed(player: PlayerIA) = playerHavePassed.find { player == it } != null
+    private fun hasPlayerPassed(player: Player) = playerHavePassed.find { player == it } != null
 
     fun resetPlayerPassed() {
         playerHavePassed = arrayListOf()
