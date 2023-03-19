@@ -78,8 +78,7 @@ class PlayerHuman(name: String): Player(name) {
             if(card != null) {
                 if(game.canPlayCard(card)) {
                     println("Playing $card")
-                    playCard(card)
-                    game.playCard(card)
+                    game.playCard(card, this)
                     if(hand.getHand().size == 0) {
                         game.playerFinished(this)
                     }

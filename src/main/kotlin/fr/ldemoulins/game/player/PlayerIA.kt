@@ -23,7 +23,7 @@ class PlayerIA(name: String) : Player(name) {
                } else {
                    Logger.log("$name plays $it")
                    playCard(it)
-                   game.playCard(it)
+                   game.playCard(it, this)
                }
            }
         }

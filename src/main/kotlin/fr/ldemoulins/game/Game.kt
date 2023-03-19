@@ -44,8 +44,10 @@ class Game(players: MutableList<Player>) {
 
     fun getCurrentCard() = roundState.getLastPlayedCard()
 
-    fun playCard(card: Card) {
+    fun playCard(card: Card, player: Player) {
         roundState.playCard(card)
+        player.playCard(card)
+        playersState.playerHavePlayed(player)
     }
 
     fun startGame() {
@@ -55,6 +57,7 @@ class Game(players: MutableList<Player>) {
         while (!isGameEnded()) {
             if (haveAllPlayersPassed()) {
                 roundState.newRound()
+                playersState.setPlayerAsLastPlayed()
                 continue
             }
 
@@ -62,6 +65,7 @@ class Game(players: MutableList<Player>) {
                 if (!hasPlayerPassed(it) && !hasPlayerFinished(it)) it.takeTurn(this)
                 if (roundState.shouldRoundStop()) {
                     roundState.newRound()
+                    playersState.setPlayerAsLastPlayed()
                 } else {
                     nextPlayer()
                 }

@@ -12,7 +12,9 @@ abstract class Player(val name: String) {
         hand.sortHand()
     }
 
-    protected fun playCard(card: Card) = hand.playCard(card)
+    fun playCard(card: Card) {
+        hand.playCard(card)
+    }
 
     fun formattedHand() = hand.getHand().let { "$name's hand contains ${it.size} cards, which are: $it" }
 }

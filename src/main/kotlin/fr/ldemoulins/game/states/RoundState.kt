@@ -2,16 +2,12 @@ package fr.ldemoulins.game.states
 
 import fr.ldemoulins.game.Game
 import fr.ldemoulins.game.cards.Card
+import fr.ldemoulins.game.player.Player
 import fr.ldemoulins.utils.Logger
 
-class RoundState {
+class RoundState(private val game: Game) {
     private var playedCards: MutableList<Card> = mutableListOf()
-    private val game: Game
     private var roundCount = 0
-
-    constructor(game: Game) {
-        this.game = game
-    }
 
     fun newRound() {
         playedCards = mutableListOf()

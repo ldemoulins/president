@@ -21,15 +21,15 @@ fun main(args: Array<String>) {
     val deck = Deck()
 
     val numberOfHands = 4
-    val playerNames = arrayOf("Apava", "Geroges", "L'autre teube")
+    val playerNames = arrayOf("Apava", "Geroges", "L'autre teube", "ldemoul", "les magnolias")
     val players = arrayListOf<Player>()
-    for(i in 1 until numberOfHands) players.add(PlayerIA(playerNames[i - 1]))
-    players.add(PlayerHuman(ArgParser.playerName))
+    for(i in 1 until numberOfHands+1) players.add(PlayerIA(playerNames[i - 1]))
+//    players.add(PlayerHuman(ArgParser.playerName))
 
     var idx = 0
     while (deck.hasCards()) {
         players[idx].hand.addCard(deck.drawCard())
-        idx = (idx + 1) % numberOfHands
+        idx = (idx + 1) % players.size
     }
 
     val game = Game(players)
